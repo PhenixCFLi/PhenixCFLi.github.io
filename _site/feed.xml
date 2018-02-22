@@ -5,8 +5,8 @@
     <description>A Bird's View</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 23 Feb 2018 04:35:02 +0800</pubDate>
-    <lastBuildDate>Fri, 23 Feb 2018 04:35:02 +0800</lastBuildDate>
+    <pubDate>Fri, 23 Feb 2018 05:10:50 +0800</pubDate>
+    <lastBuildDate>Fri, 23 Feb 2018 05:10:50 +0800</lastBuildDate>
     <generator>Jekyll v3.7.2</generator>
     
       <item>
@@ -66,7 +66,7 @@ url = https://&lt;font color=&quot;red&quot;&gt;&lt;b&gt;&lt;i&gt;&amp;#60;user 
 &lt;blockquote&gt;
   &lt;blockquote&gt;
     &lt;blockquote&gt;
-      &lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed&quot;&gt;https://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed&quot;&gt;stackoverflow&lt;/a&gt;&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/blockquote&gt;
 &lt;/blockquote&gt;
@@ -79,7 +79,7 @@ url = https://&lt;font color=&quot;red&quot;&gt;&lt;b&gt;&lt;i&gt;&amp;#60;user 
       &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ruby &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &amp;lt; /dev/null 2&amp;gt; /dev/null
   brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;libffi
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
-      &lt;p&gt;Ref: &lt;a href=&quot;http://macappstore.org/libffi/&quot;&gt;http://macappstore.org/libffi/&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;Ref: &lt;a href=&quot;http://macappstore.org/libffi/&quot;&gt;home-brew and libffi installation guide&lt;/a&gt;&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
   &lt;li&gt;Install jekyll for development and test the Github page locally
@@ -91,9 +91,9 @@ url = https://&lt;font color=&quot;red&quot;&gt;&lt;b&gt;&lt;i&gt;&amp;#60;user 
 gem &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;jekyll bundler
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
       &lt;p&gt;PS: Don’t know if because my notebook is slow, need to download and compile for a while as this step … zzZ&lt;br /&gt;&lt;br /&gt;
-Ref: &lt;a href=&quot;https://github.com/barryclark/jekyll-now&quot;&gt;https://github.com/barryclark/jekyll-now&lt;/a&gt;,
-&lt;a href=&quot;https://jekyllrb.com/docs/installation/&quot;&gt;https://jekyllrb.com/docs/installation/&lt;/a&gt;,
-&lt;a href=&quot;https://jekyllrb.com/docs/quickstart/&quot;&gt;https://jekyllrb.com/docs/quickstart/&lt;/a&gt;&lt;/p&gt;
+Ref: &lt;a href=&quot;https://github.com/barryclark/jekyll-now&quot;&gt;Jekyll-now&lt;/a&gt;,
+&lt;a href=&quot;https://jekyllrb.com/docs/installation/&quot;&gt;Jekyll installation&lt;/a&gt;,
+&lt;a href=&quot;https://jekyllrb.com/docs/quickstart/&quot;&gt;Jekyll quickstart&lt;/a&gt;&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
   &lt;li&gt;Create the basic web template using Jekyll
@@ -135,6 +135,11 @@ jekyll serve
     &lt;/blockquote&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Ref: &lt;a href=&quot;https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet&quot; title=&quot;markdown cheatsheet&quot;&gt;markdown cheatsheet&lt;/a&gt;,
+&lt;a href=&quot;https://disqus.com/&quot;&gt;disqus&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         <pubDate>Tue, 20 Feb 2018 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2018/02/20/Hello-World.html</link>

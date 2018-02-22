@@ -38,7 +38,7 @@ so I will share the step by step setup procedure of this blog and the developmen
 >>> url = https://<font color='red'><b><i>&#60;user name&#62;@</i></b></font>github.com/<user name>/<user name>.github.io<br>
 >>> ...
 
->>> Ref: <https://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed>
+>>> Ref: [stackoverflow](https://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed)
 
 
 ### Step 2: Create the jekyll development environment ###
@@ -48,7 +48,7 @@ so I will share the step by step setup procedure of this blog and the developmen
 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
 	brew install libffi
 ```
-> Ref: <http://macappstore.org/libffi/>
+> Ref: [home-brew and libffi installation guide](http://macappstore.org/libffi/)
 * Install jekyll for development and test the Github page locally
 > Execute below command from terminal window
 ```bash
@@ -58,9 +58,9 @@ sudo gem install github-pages
 gem install jekyll bundler
 ```
 >PS: Don't know if because my notebook is slow, need to download and compile for a while as this step ... zzZ<br><br>
->Ref: <https://github.com/barryclark/jekyll-now>,
-><https://jekyllrb.com/docs/installation/>,
-><https://jekyllrb.com/docs/quickstart/>
+>Ref: [Jekyll-now](https://github.com/barryclark/jekyll-now),
+>[Jekyll installation](https://jekyllrb.com/docs/installation/),
+>[Jekyll quickstart](https://jekyllrb.com/docs/quickstart/)
 
 * Create the basic web template using Jekyll
 > Execute below command from terminal window
@@ -87,3 +87,6 @@ jekyll serve
 * Visit [jekyllthemes.org](http://jekyllthemes.org "Jekyll Themes homepage"), select and download your favorite theme.
 ![alt text](/assets/img/2018-02-20-Hello-World/jekyll-themes.png)
 > PS: Of coz you can design your own or search more themes from internet. For your info, my one is modify from [Wall-E Theme](http://jekyllthemes.org/themes/wall-e/ "Wall-E Themes homepage")
+
+> Ref: [markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet "markdown cheatsheet"),
+> [disqus](https://disqus.com/)
