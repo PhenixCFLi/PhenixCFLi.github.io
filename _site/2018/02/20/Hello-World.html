@@ -76,7 +76,130 @@
         <h1 class="post-title">Hello World !!</h1>
     </center>
     <div class="ui divider"></div>
-    
+    <p>This is my first post in github, hello world!</p>
+
+<p>In github, I think the aim is to share something you like, or discovered, or summarized that can help others, 
+so I will share the step by step setup procedure of this blog and the development environment (in MacOS) in my first post to make it easier to all. And at the same time, practice to use “jekyll” and “markdown” to create the web. Let’s start ;)</p>
+
+<h3 id="step-1-register-account-in-github-and-create-the-blog">Step 1: Register account in Github and create the blog</h3>
+<ul>
+  <li>Browse the <a href="https://github.com," title="Github's homepage">github page</a> and create an account if you don’t have.
+<img src="/assets/img/2018-02-20-Hello-World/github-reg.png" alt="alt text" /></li>
+  <li>Login to your github account</li>
+  <li>Create a new repository with the name with format “&lt;user name&gt;.github.io”
+<img src="/assets/img/2018-02-20-Hello-World/github-new-repo.png" alt="alt text" />
+    <blockquote>
+      <p>PS: It is important that &lt;user name&gt; must be same as your github account, otherwise it may not work</p>
+    </blockquote>
+  </li>
+  <li>Create and commit a dummy page
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">cd</span> &lt;destination directory&gt;
+  git clone https://github.com/&lt;user name&gt;/&lt;user name&gt;.github.io
+  <span class="nb">cd</span> &lt;user name&gt;.github.io/
+  <span class="nb">echo</span> <span class="s2">"Hello World"</span> <span class="o">&gt;</span> index.html
+  git add <span class="nt">--all</span>
+  git commit <span class="nt">-m</span> <span class="s2">"Initial commit"</span>
+  git push <span class="nt">-u</span> origin master
+</code></pre></div>      </div>
+    </blockquote>
+  </li>
+  <li>Congs, the page is created and you can see it in “http://&lt;user name&gt;.github.io” 
+<img src="/assets/img/2018-02-20-Hello-World/first-github-page.png" alt="alt text" />
+    <blockquote>
+      <p>PS: During push the source to master, it is found that it return error code 403 sometimes.
+If this happen, need to add the username to the URI in the file .git/config to resolve, ie.</p>
+      <blockquote>
+        <p>cat .git/config</p>
+      </blockquote>
+    </blockquote>
+  </li>
+</ul>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>…<br />
+[remote “origin”]<br />
+url = https://<font color="red"><b><i>&#60;user name&#62;@</i></b></font>github.com/<user name="">/<user name="">.github.io<br />
+...</user></user></p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>Ref: <a href="https://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed">https://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed</a></p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<h3 id="step-2-create-the-jekyll-development-environment">Step 2: Create the jekyll development environment</h3>
+<ul>
+  <li>Install home-brew and libffi
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ruby <span class="nt">-e</span> <span class="s2">"</span><span class="k">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">"</span> &lt; /dev/null 2&gt; /dev/null
+  brew <span class="nb">install </span>libffi
+</code></pre></div>      </div>
+      <p>Ref: <a href="http://macappstore.org/libffi/">http://macappstore.org/libffi/</a></p>
+    </blockquote>
+  </li>
+  <li>Install jekyll for development and test the Github page locally
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>gem update
+<span class="nb">sudo </span>gem <span class="nb">install </span>jekyll
+<span class="nb">sudo </span>gem <span class="nb">install </span>github-pages
+gem <span class="nb">install </span>jekyll bundler
+</code></pre></div>      </div>
+      <p>PS: Don’t know if because my notebook is slow, need to download and compile for a while as this step … zzZ<br /><br />
+Ref: <a href="https://github.com/barryclark/jekyll-now">https://github.com/barryclark/jekyll-now</a>,
+<a href="https://jekyllrb.com/docs/installation/">https://jekyllrb.com/docs/installation/</a>,
+<a href="https://jekyllrb.com/docs/quickstart/">https://jekyllrb.com/docs/quickstart/</a></p>
+    </blockquote>
+  </li>
+  <li>Create the basic web template using Jekyll
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new &lt;user name&gt;.github.io
+<span class="nb">cd</span> &lt;user name&gt;.github.io
+jekyll serve
+</code></pre></div>      </div>
+      <p>Now, you have create the initial web template locally and able to modify based on this.
+<img src="/assets/img/2018-02-20-Hello-World/jekyll-template.png" alt="alt text" /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<blockquote>
+  <p>PS: You have just create (and update) the web in local, it is not yet committed to Github.</p>
+</blockquote>
+
+<ul>
+  <li>Commit to Github after you finalized the web content
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  git add <span class="nt">--all</span>
+  git commit <span class="nt">-m</span> <span class="s2">"Initial commit"</span>
+  git push <span class="nt">-u</span> origin master
+</code></pre></div>      </div>
+      <p>PS: You have deployed your first Github page already !!</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h3 id="step-3-make-it-more-beautiful">Step 3: Make it more beautiful</h3>
+<ul>
+  <li>Visit <a href="http://jekyllthemes.org" title="Jekyll Themes homepage">jekyllthemes.org</a>, select and download your favorite theme.
+<img src="/assets/img/2018-02-20-Hello-World/jekyll-themes.png" alt="alt text" />
+    <blockquote>
+      <p>PS: Of coz you can design your own or search more themes from internet. For your info, my one is modify from <a href="http://jekyllthemes.org/themes/wall-e/" title="Wall-E Themes homepage">Wall-E Theme</a></p>
+    </blockquote>
+  </li>
+</ul>
 
     <div class="ui horizontal divider">
         Thank You For Reading

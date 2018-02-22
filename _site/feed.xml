@@ -5,13 +5,136 @@
     <description>A Bird's View</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 20 Feb 2018 02:38:20 +0800</pubDate>
-    <lastBuildDate>Tue, 20 Feb 2018 02:38:20 +0800</lastBuildDate>
+    <pubDate>Fri, 23 Feb 2018 04:35:02 +0800</pubDate>
+    <lastBuildDate>Fri, 23 Feb 2018 04:35:02 +0800</lastBuildDate>
     <generator>Jekyll v3.7.2</generator>
     
       <item>
         <title>Hello World !!</title>
-        <description>
+        <description>&lt;p&gt;This is my first post in github, hello world!&lt;/p&gt;
+
+&lt;p&gt;In github, I think the aim is to share something you like, or discovered, or summarized that can help others, 
+so I will share the step by step setup procedure of this blog and the development environment (in MacOS) in my first post to make it easier to all. And at the same time, practice to use “jekyll” and “markdown” to create the web. Let’s start ;)&lt;/p&gt;
+
+&lt;h3 id=&quot;step-1-register-account-in-github-and-create-the-blog&quot;&gt;Step 1: Register account in Github and create the blog&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Browse the &lt;a href=&quot;https://github.com,&quot; title=&quot;Github's homepage&quot;&gt;github page&lt;/a&gt; and create an account if you don’t have.
+&lt;img src=&quot;/assets/img/2018-02-20-Hello-World/github-reg.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Login to your github account&lt;/li&gt;
+  &lt;li&gt;Create a new repository with the name with format “&amp;lt;user name&amp;gt;.github.io”
+&lt;img src=&quot;/assets/img/2018-02-20-Hello-World/github-new-repo.png&quot; alt=&quot;alt text&quot; /&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;PS: It is important that &amp;lt;user name&amp;gt; must be same as your github account, otherwise it may not work&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Create and commit a dummy page
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &amp;lt;destination directory&amp;gt;
+  git clone https://github.com/&amp;lt;user name&amp;gt;/&amp;lt;user name&amp;gt;.github.io
+  &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &amp;lt;user name&amp;gt;.github.io/
+  &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hello World&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; index.html
+  git add &lt;span class=&quot;nt&quot;&gt;--all&lt;/span&gt;
+  git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Initial commit&quot;&lt;/span&gt;
+  git push &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Congs, the page is created and you can see it in “http://&amp;lt;user name&amp;gt;.github.io” 
+&lt;img src=&quot;/assets/img/2018-02-20-Hello-World/first-github-page.png&quot; alt=&quot;alt text&quot; /&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;PS: During push the source to master, it is found that it return error code 403 sometimes.
+If this happen, need to add the username to the URI in the file .git/config to resolve, ie.&lt;/p&gt;
+      &lt;blockquote&gt;
+        &lt;p&gt;cat .git/config&lt;/p&gt;
+      &lt;/blockquote&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;…&lt;br /&gt;
+[remote “origin”]&lt;br /&gt;
+url = https://&lt;font color=&quot;red&quot;&gt;&lt;b&gt;&lt;i&gt;&amp;#60;user name&amp;#62;@&lt;/i&gt;&lt;/b&gt;&lt;/font&gt;github.com/&lt;user name=&quot;&quot;&gt;/&lt;user name=&quot;&quot;&gt;.github.io&lt;br /&gt;
+...&lt;/user&gt;&lt;/user&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed&quot;&gt;https://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;step-2-create-the-jekyll-development-environment&quot;&gt;Step 2: Create the jekyll development environment&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Install home-brew and libffi
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ruby &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &amp;lt; /dev/null 2&amp;gt; /dev/null
+  brew &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;libffi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;Ref: &lt;a href=&quot;http://macappstore.org/libffi/&quot;&gt;http://macappstore.org/libffi/&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Install jekyll for development and test the Github page locally
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;gem update
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;gem &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;jekyll
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;gem &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;github-pages
+gem &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;jekyll bundler
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;PS: Don’t know if because my notebook is slow, need to download and compile for a while as this step … zzZ&lt;br /&gt;&lt;br /&gt;
+Ref: &lt;a href=&quot;https://github.com/barryclark/jekyll-now&quot;&gt;https://github.com/barryclark/jekyll-now&lt;/a&gt;,
+&lt;a href=&quot;https://jekyllrb.com/docs/installation/&quot;&gt;https://jekyllrb.com/docs/installation/&lt;/a&gt;,
+&lt;a href=&quot;https://jekyllrb.com/docs/quickstart/&quot;&gt;https://jekyllrb.com/docs/quickstart/&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Create the basic web template using Jekyll
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll new &amp;lt;user name&amp;gt;.github.io
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &amp;lt;user name&amp;gt;.github.io
+jekyll serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;Now, you have create the initial web template locally and able to modify based on this.
+&lt;img src=&quot;/assets/img/2018-02-20-Hello-World/jekyll-template.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;PS: You have just create (and update) the web in local, it is not yet committed to Github.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Commit to Github after you finalized the web content
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  git add &lt;span class=&quot;nt&quot;&gt;--all&lt;/span&gt;
+  git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Initial commit&quot;&lt;/span&gt;
+  git push &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;PS: You have deployed your first Github page already !!&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;step-3-make-it-more-beautiful&quot;&gt;Step 3: Make it more beautiful&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Visit &lt;a href=&quot;http://jekyllthemes.org&quot; title=&quot;Jekyll Themes homepage&quot;&gt;jekyllthemes.org&lt;/a&gt;, select and download your favorite theme.
+&lt;img src=&quot;/assets/img/2018-02-20-Hello-World/jekyll-themes.png&quot; alt=&quot;alt text&quot; /&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;PS: Of coz you can design your own or search more themes from internet. For your info, my one is modify from &lt;a href=&quot;http://jekyllthemes.org/themes/wall-e/&quot; title=&quot;Wall-E Themes homepage&quot;&gt;Wall-E Theme&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Tue, 20 Feb 2018 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2018/02/20/Hello-World.html</link>
