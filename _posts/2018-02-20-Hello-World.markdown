@@ -6,8 +6,8 @@ author: PhenixLi
 ---
 This is my first post in github, hello world!
 
-In github, I think the aim is to share something you like, or discovered, or summarized that can help others, 
-so I will share the step by step setup procedure of this blog and the development environment (in MacOS) in my first post to make it easier to all. And at the same time, practice to use "jekyll" and "markdown" to create the web. Let's start ;)
+In github, the aim is to share something you like, or discovered, or summarized that can help others, 
+so I share the step by step setup procedure of this blog and the development environment (in MacOS) in my first post to make it easier to all. And at the same time, practice to use "jekyll" and "markdown" to create the web. Let's start ;)
 
 ### Step 1: Register account in Github and create the blog ###
 * Browse the [github page](https://github.com, "Github's homepage") and create an account if you don't have.
@@ -69,10 +69,11 @@ jekyll new <user name>.github.io
 cd <user name>.github.io
 jekyll serve
 ```
-> Now, you have create the initial web template locally and able to modify based on this.
+> Now, you have create the initial web template locally and able to modify based on this.<br>
+> You can view your blog locally using any browser to url (http://localhost:4000) 
 ![alt text](/assets/img/2018-02-20-Hello-World/jekyll-template.png)
 
-> PS: You have just create (and update) the web in local, it is not yet committed to Github.
+> PS: You have only created (and update) the blog in local computer, it is not yet committed to Github.
 
 * Commit to Github after you finalized the web content
 > Execute below command from terminal window
@@ -86,7 +87,7 @@ jekyll serve
 ### Step 3: Make it more beautiful ###
 * Visit [jekyllthemes.org](http://jekyllthemes.org "Jekyll Themes homepage"), select and download your favorite theme.
 ![alt text](/assets/img/2018-02-20-Hello-World/jekyll-themes.png)
-> PS: Of coz you can design your own or search more themes from internet. For your info, my one is modify from [Wall-E Theme](http://jekyllthemes.org/themes/wall-e/ "Wall-E Themes homepage")
+> PS: My one is modify from [Wall-E Theme](http://jekyllthemes.org/themes/wall-e/ "Wall-E Themes homepage") select from the link above, of coz you can also search more themes from internet or design your own theme. Feel free to leave me message if you found any question and comment.
 
 > Ref: [markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet "markdown cheatsheet"),
 > [disqus](https://disqus.com/)

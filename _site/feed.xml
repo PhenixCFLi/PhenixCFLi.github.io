@@ -5,16 +5,406 @@
     <description>A Bird's View</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 23 Feb 2018 05:10:50 +0800</pubDate>
-    <lastBuildDate>Fri, 23 Feb 2018 05:10:50 +0800</lastBuildDate>
+    <pubDate>Sun, 18 Mar 2018 02:57:42 +0800</pubDate>
+    <lastBuildDate>Sun, 18 Mar 2018 02:57:42 +0800</lastBuildDate>
     <generator>Jekyll v3.7.2</generator>
+    
+      <item>
+        <title>Hadoop Part 1 - Installation</title>
+        <description>&lt;p&gt;Big data and machine learning are very hot topic in recent years.
+They are the two face of a coin, when you see the term “machine learning”, the first thing in you mine is most likely “big data”.
+But when you talking about “big data”, what appear in you brain first is most likely the elephant “Hadoop”.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://hadoop.apache.org/&quot;&gt;&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/220px-Hadoop_logo_new.svg.png&quot; alt=&quot;image alt text here&quot; /&gt;&lt;/a&gt; is an open-source tool for big data analysis,
+initial release on Dec 2011 and the latest release is version 3.0.0.
+Although it is famous, it would be different for individuals to experience it’s power. 
+It is because it requires a farm of computers to release it’s magic which most of you may never have at your home or even your office (especially in HK … :().&lt;/p&gt;
+
+&lt;p&gt;In this article, the way to setup this elephant under VM environment will be shared.
+You can have a closer look to “Hadoop” easier, and you can also use it as a test environment to evaluate your own code/job before deploy to a big farm of computer for easier debuging. Enjoy ;).&lt;/p&gt;
+
+&lt;h2 id=&quot;setup-a-2-node-hadoop-cluster-using-2-virtualbox-vm&quot;&gt;Setup a 2-node Hadoop cluster (using 2 VirtualBox VM)&lt;/h2&gt;
+&lt;h3 id=&quot;step-0-software-download-location&quot;&gt;Step 0: Software download location&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Download CentOS7 installation disk image (ISO) file from &lt;a href=&quot;https://www.centos.org/download/&quot;&gt;https://www.centos.org/download/&lt;/a&gt; 
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/Download-CentOS7.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Downlaod and install the latest VirtualBox from &lt;a href=&quot;https://www.virtualbox.org/wiki/Downloads&quot;&gt;https://www.virtualbox.org/wiki/Downloads&lt;/a&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/Download-VirtualBox.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Download Hadoop version 3.0.0 from &lt;a href=&quot;http://hadoop.apache.org/releases.html&quot;&gt;http://hadoop.apache.org/releases.html&lt;/a&gt; 
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/Download-Hadoop.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Download Oracle JDK 8 from &lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&quot;&gt;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&lt;/a&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/Download-JVM.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;step-1-create-first-vm-centos7-alpha-on-virtualbox&quot;&gt;Step 1: Create first VM “centos7-alpha” on VirtualBox&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Create VM with settings as below
+    &lt;ul&gt;
+      &lt;li&gt;VM Name: centos7-alpha &lt;br /&gt;&lt;/li&gt;
+      &lt;li&gt;Memory: 4GB &lt;br /&gt;&lt;/li&gt;
+      &lt;li&gt;Virtual HDD Type: VDI (VirtualBox Disk Image), Dynamically Allocated (to say disk space) &lt;br /&gt;&lt;/li&gt;
+      &lt;li&gt;Virtual HDD Size: 40GB (have to be large enough to install software) &lt;br /&gt;&lt;/li&gt;
+      &lt;li&gt;Network Adapter Type: NAT (temporary used for easier software installation with internet access) &lt;br /&gt;&lt;/li&gt;
+      &lt;li&gt;Boot Sequence: Optical Drive First&lt;/li&gt;
+      &lt;li&gt;OS: CentOS 7&lt;/li&gt;
+      &lt;li&gt;Hostname: centos7-alpha (192.168.56.3)&lt;/li&gt;
+      &lt;li&gt;Hostname of the other node: centos7-beta (192.168.56.4)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-1.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-2.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-3.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-4.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-5.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-6.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-8.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-11.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-12.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;PS: Details please refer to &lt;a href=&quot;https://www.virtualbox.org/wiki/End-user_documentation&quot;&gt;VirtualBox doc&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Mount the DVD image file to Optical Drive, power up VM and install CentOS7&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-8.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-9.png&quot; alt=&quot;alt text&quot; /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/create-vm-10.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;step-2-configure-vm-and-install-required-software&quot;&gt;Step 2: Configure VM and install required software&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create OS user “hadoop” with home directory located at “/home/hadoop”
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;useradd hadoop
+  &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;passwd hadoop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;PS: You can also create users during the OS installations.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a name=&quot;Configure-hostname&quot;&gt;&lt;/a&gt;Configure the hostname to centos7-alpha
+    &lt;blockquote&gt;
+      &lt;p&gt;Update the file “/etc/hostname”, ie.&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/hostname
+  centos7-alpha.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;Update the file “/etc/sysconfig/network” to add the line “HOSTNAME=centos7-alpha.com”, ie.&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/sysconfig/network
+  &lt;span class=&quot;c&quot;&gt;# Created by anaconda&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;HOSTNAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;centos7-alpha.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;update the file “/etc/hosts” to include IP of both hosts, ie.&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/hosts
+  127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+  ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+  192.168.56.3    centos7-alpha.com centos7-alpha
+  192.168.56.4    centos7-beta.com centos7-beta
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;Ref: &lt;a href=&quot;https://www.cyberciti.biz/faq/ubuntu-change-hostname-command/&quot;&gt;Ubuntu Linux Change Hostname (computer name)&lt;/a&gt;, 
+&lt;a href=&quot;https://support.rackspace.com/how-to/centos-hostname-change/&quot;&gt;Change a server’s hostname in CentOS&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Stop firewall (or open port for inter-communication across Hadoop cluster nodes),
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  systemctl stop firewalld.service
+  chkconfig firewalld off
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;PS: This have to be done with root privilege.&lt;br /&gt;
+Ref: &lt;a href=&quot;https://superuser.com/questions/863456/im-able-to-ssh-into-host-but-not-to-access-it-from-browser-no-route-to-host&quot;&gt;Resolve no route to host&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Install Oracle JDK 8
+    &lt;blockquote&gt;
+      &lt;p&gt;Download the JDK rpm package (jdk-Bu161-linux-x64.rpm) from &lt;a href=&quot;http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.rpm&quot;&gt;download link&lt;/a&gt; and stored in home directory of user “hadoop”&lt;br /&gt;&lt;br /&gt;
+Install JDK 8, by execute below command from terminal window under home directory&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  rpm &lt;span class=&quot;nt&quot;&gt;-UvH&lt;/span&gt; jdk-Bu161-linux-x64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;PS: This have to be done with root privilege&lt;br /&gt;&lt;br /&gt;
+Configure JDK 8 as default JVM by adding below lines to file “.bashrc” under user “hadoop”&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;JAVA_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/java/jdk1.8.0_161
+  &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$JAVA_HOME&lt;/span&gt;/bin:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$HADOOP_HOME&lt;/span&gt;/sbin
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;step-3-install-and-configure-hadoop&quot;&gt;Step 3: Install and Configure Hadoop&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Suggested hadoop settings
+    &lt;ul&gt;
+      &lt;li&gt;Hadoop version: 3.0.0&lt;/li&gt;
+      &lt;li&gt;Hadoop home: /home/hadoop (Same as user home)&lt;/li&gt;
+      &lt;li&gt;Java version: Java(TM) SE Runtime Environment (build 1.8.0_161-b12)&lt;/li&gt;
+      &lt;li&gt;Hadoop data dir: /home/hadoop/hadoop-infra&lt;/li&gt;
+      &lt;li&gt;Hadoop Namenode: centos7-alpha
+        &lt;blockquote&gt;
+
+        &lt;/blockquote&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Install Hadoop
+    &lt;blockquote&gt;
+      &lt;p&gt;Download the hadoop binary tarball (hadoop-3.0.0.tar.gz) from the &lt;a href=&quot;http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0/hadoop-3.0.0.tar.gz&quot;&gt;download link&lt;/a&gt; and store under home directory of user “hadoop”&lt;br /&gt;&lt;br /&gt;
+Extract the hadoop binary tarball to home directory by command&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nb&quot;&gt;tar&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-vzxf&lt;/span&gt; hadoop-3.0.0.tar.gz
+  &lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;hadoop-3.0.0/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; ./
+  &lt;span class=&quot;nb&quot;&gt;rmdir &lt;/span&gt;hadoop-3.0.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;The directory structure will be as below &lt;br /&gt;
+	&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/hadoop-directory-structure.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;Configure the required environment variables by adding below command to file “.bashrc” under user “hadoop”&lt;/p&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HADOOP_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/hadoop 
+	&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HADOOP_MAPRED_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HADOOP_HOME&lt;/span&gt; 
+	&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HADOOP_COMMON_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HADOOP_HOME&lt;/span&gt; 
+	&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HADOOP_HDFS_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HADOOP_HOME&lt;/span&gt; 
+	&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;YARN_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HADOOP_HOME&lt;/span&gt; 
+	&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HADOOP_COMMON_LIB_NATIVE_DIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HADOOP_HOME&lt;/span&gt;/lib/native 
+	&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$HADOOP_HOME&lt;/span&gt;/sbin:&lt;span class=&quot;nv&quot;&gt;$HADOOP_HOME&lt;/span&gt;/bin 
+	&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HADOOP_INSTALL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HADOOP_HOME&lt;/span&gt; 
+	&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/hadoop/lib/native  &lt;span class=&quot;c&quot;&gt;# For Native Library&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Modify “/home/hadoop/etc/hadoop/core-site.xml” as below&lt;/p&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /home/hadoop/etc/hadoop/core-site.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/core-site-xml.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;
+Modify “/home/hadoop/etc/hadoop/hdfs-site.xml” as below&lt;/p&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /home/hadoop/etc/hadoop/hdfs-site.xml 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/hdfs-site-xml.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;
+Modify “/home/hadoop/etc/hadoop/yarn-site.xml” as below&lt;/p&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /home/hadoop/etc/hadoop/yarn-site.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/yarn-site-xml.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	The value of properties &lt;span class=&quot;s2&quot;&gt;&quot;yarn.application.classpath&quot;&lt;/span&gt; have to include all jar files &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;below paths
+	/home/hadoop/share/hadoop/common,
+	/home/hadoop/share/hadoop/common/lib,
+	/home/hadoop/share/hadoop/hdfs,
+	/home/hadoop/share/hadoop/hdfs/lib,
+	/home/hadoop/share/hadoop/yarn,
+	/home/hadoop/share/hadoop/yarn/lib
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Modify “/home/hadoop/etc/hadoop/mapred-site.xml” as below&lt;/p&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /home/hadoop/etc/hadoop/mapred-site.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/mapred-site-xml.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	The value of properties &lt;span class=&quot;s2&quot;&gt;&quot;mapreduce.application.classpath&quot;&lt;/span&gt; have to include all jar files &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;below paths
+	/home/hadoop/share/hadoop/common,
+	/home/hadoop/share/hadoop/common/lib,
+	/home/hadoop/share/hadoop/hdfs,
+	/home/hadoop/share/hadoop/hdfs/lib,
+	/home/hadoop/share/hadoop/mapreduce
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Modify “/etc/hadoop/etc/hadoop/workers” to include hostname of all nodes as below&lt;/p&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /home/hadoop/etc/hadoop/workers
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/workers.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;
+Up to now, the installation of VM “centos7-alpha” is completed.&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;step-4-create-another-node-centos7-beta&quot;&gt;Step 4: Create another node “centos7-beta”&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Clone VM “centos7-alpha” to VM “centos7-beta”
+    &lt;blockquote&gt;
+      &lt;p&gt;Power off VM “centos7-alpha”&lt;br /&gt;
+Clone VM “centos7-alpha” to another VM “centos7-beta” in virtual box manager
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/clone-vm-4.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Change the virtual network adaptor of both VM to Host-only Adaptor
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/clone-vm-12.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;Ref: &lt;a href=&quot;https://blogs.oracle.com/scoter/networking-in-virtualbox-v2&quot;&gt;Oracle VM VirtualBox: Networking options and how-to manage them&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Update the host settings
+    &lt;blockquote&gt;
+      &lt;p&gt;Power up VM “centos7-beta”&lt;br /&gt;
+Configure the hostname from “centos7-alpha” to “centos7-beta” follow &lt;a href=&quot;#Configure-hostname&quot;&gt;step above&lt;/a&gt;&lt;br /&gt;
+Restart VM “centos7-beta” to make the changes effective&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Configure SSH to ensure each cluster node can login itself and all other node without password
+    &lt;blockquote&gt;
+      &lt;p&gt;Start both VM &lt;br /&gt;
+Ssh-key config to ensure localhost can be reached without password&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ssh-keygen
+  &lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /home/hadoop.ssh/id_rsa.pub .ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;Test to login localhost&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ssh localhost
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;Ssh-key config to ensure other node can be reach without password&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ssh-copy-id &amp;lt;hostname-of-target-node&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;Test to login other node&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ssh &amp;lt;hostname-of-target-node&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;Ref: &lt;a href=&quot;https://www.linuxtrainingacademy.com/ssh-login-without-password/&quot;&gt;ssh login without password&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;step-5-startup-hadoop&quot;&gt;Step 5: Startup Hadoop&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Format HDFS
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  hdfs namenode &lt;span class=&quot;nt&quot;&gt;-format&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;PS: This is done only on first namenode startup&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Start DFS
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  start-dfs.sh
+  Starting namenodes on &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;centos7-alpha]
+  Starting datanodes
+  Starting secondary namenodes &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;centos7-alpha.com]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;After the scripted completed, verify the process as below&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hadoop@centos7-alpha ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jps
+  6304 SecondaryNameNode
+  6084 DataNode
+  5948 NameNode
+  6510 Jps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hadoop@centos7-beta ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jps
+  2678 DataNode
+  2861 Jps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Start Yarn
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  start-yarn.sh
+  Starting resourcemanager
+  Starting nodemanagers
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;After the scripted completed, verify the process as below&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hadoop@centos7-alpha ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jps
+  6304 SecondaryNameNode
+  6084 DataNode
+  5948 NameNode
+  6716 ResourceManager
+  6846 NodeManager
+  7246 Jps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hadoop@centos7-beta ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jps
+  2977 NodeManager
+  2678 DataNode
+  2861 Jps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Start job history server
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  mapred &lt;span class=&quot;nt&quot;&gt;--daemon&lt;/span&gt; start historyserver
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+      &lt;p&gt;After the scripted completed, verify the process as below&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hadoop@centos7-alpha ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jps
+  6304 SecondaryNameNode
+  6084 DataNode
+  5948 NameNode
+  6716 ResourceManager
+  6846 NodeManager
+  7373 JobHistoryServer
+  7246 Jps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;PS: Above startup scripts only need to runs on one node only, hadoop processes will be started in all nodes in the cluster&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;step-6-hadoop-consoles-for-cluster-information&quot;&gt;Step 6: Hadoop consoles for cluster information&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Cluster information
+    &lt;blockquote&gt;
+      &lt;p&gt;Console URL: http://centos7-alpha:9870&lt;br /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/console-all-applications.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Node information
+    &lt;blockquote&gt;
+      &lt;p&gt;Console URL: http://centos7-alpha:8088&lt;br /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/console-node-info.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Job history
+    &lt;blockquote&gt;
+      &lt;p&gt;Console URL: http://centos7-alpha:19888&lt;br /&gt;
+&lt;img src=&quot;/assets/img/2018-03-08-Hadoop-Part-1/console-job-history.png&quot; alt=&quot;alt text&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;step-7-stop-hadoop&quot;&gt;Step 7: Stop Hadoop&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Stop job history server
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  mapred &lt;span class=&quot;nt&quot;&gt;--daemon&lt;/span&gt; stop historyserver
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Stop Yarn
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  stop-yarn.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Stop DFS
+    &lt;blockquote&gt;
+      &lt;p&gt;Execute below command from terminal window&lt;/p&gt;
+      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  stop-dfs.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Verify the hadoop processes stopped
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hadoop@centos7-alpha ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jps
+  7246 Jps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;hadoop@centos7-beta ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jps
+  2861 Jps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Ref: &lt;a href=&quot;Ref: https://www.tutorialspoint.com/hadoop/hadoop_enviornment_setup.htm&quot;&gt;Tutorial Point&lt;/a&gt;, &lt;a href=&quot;https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/ClusterSetup.html&quot;&gt;Hadoop cluster setup (official)&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 08 Mar 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/03/08/Hadoop-Part-1.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/03/08/Hadoop-Part-1.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Hello World !!</title>
         <description>&lt;p&gt;This is my first post in github, hello world!&lt;/p&gt;
 
-&lt;p&gt;In github, I think the aim is to share something you like, or discovered, or summarized that can help others, 
-so I will share the step by step setup procedure of this blog and the development environment (in MacOS) in my first post to make it easier to all. And at the same time, practice to use “jekyll” and “markdown” to create the web. Let’s start ;)&lt;/p&gt;
+&lt;p&gt;In github, the aim is to share something you like, or discovered, or summarized that can help others, 
+so I share the step by step setup procedure of this blog and the development environment (in MacOS) in my first post to make it easier to all. And at the same time, practice to use “jekyll” and “markdown” to create the web. Let’s start ;)&lt;/p&gt;
 
 &lt;h3 id=&quot;step-1-register-account-in-github-and-create-the-blog&quot;&gt;Step 1: Register account in Github and create the blog&lt;/h3&gt;
 &lt;ul&gt;
@@ -103,14 +493,15 @@ Ref: &lt;a href=&quot;https://github.com/barryclark/jekyll-now&quot;&gt;Jekyll-n
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &amp;lt;user name&amp;gt;.github.io
 jekyll serve
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
-      &lt;p&gt;Now, you have create the initial web template locally and able to modify based on this.
+      &lt;p&gt;Now, you have create the initial web template locally and able to modify based on this.&lt;br /&gt;
+You can view your blog locally using any browser to url (http://localhost:4000) 
 &lt;img src=&quot;/assets/img/2018-02-20-Hello-World/jekyll-template.png&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;PS: You have just create (and update) the web in local, it is not yet committed to Github.&lt;/p&gt;
+  &lt;p&gt;PS: You have only created (and update) the blog in local computer, it is not yet committed to Github.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;ul&gt;
@@ -131,7 +522,7 @@ jekyll serve
   &lt;li&gt;Visit &lt;a href=&quot;http://jekyllthemes.org&quot; title=&quot;Jekyll Themes homepage&quot;&gt;jekyllthemes.org&lt;/a&gt;, select and download your favorite theme.
 &lt;img src=&quot;/assets/img/2018-02-20-Hello-World/jekyll-themes.png&quot; alt=&quot;alt text&quot; /&gt;
     &lt;blockquote&gt;
-      &lt;p&gt;PS: Of coz you can design your own or search more themes from internet. For your info, my one is modify from &lt;a href=&quot;http://jekyllthemes.org/themes/wall-e/&quot; title=&quot;Wall-E Themes homepage&quot;&gt;Wall-E Theme&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;PS: My one is modify from &lt;a href=&quot;http://jekyllthemes.org/themes/wall-e/&quot; title=&quot;Wall-E Themes homepage&quot;&gt;Wall-E Theme&lt;/a&gt; select from the link above, of coz you can also search more themes from internet or design your own theme. Feel free to leave me message if you found any question and comment.&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
 &lt;/ul&gt;

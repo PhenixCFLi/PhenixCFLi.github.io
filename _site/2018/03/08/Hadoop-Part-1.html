@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>A Bird's View</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/mobile.css">
+    <link rel="stylesheet" href="/assets/css/vendor/syntax.css">
+    <link rel="stylesheet" href="/assets/css/vendor/semantic.min.css"/>
+
+    <link rel="shortcut icon" type="image/png" href="/assets/img/logo.png"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+</head>
+
+
+<body>
+    
+    <div class="page-wrap">
+        <div class="header-wrapper">
+    <header>
+        <!-- logo and description -->
+        
+        <nav class="site-nav">
+            <div class="left-nav">
+                <!-- add titles to all buttons -->
+                <div class="ui secondary menu inverted">
+                    <a class="item" href="/">
+                        Home
+                    </a>
+                    <a class="item" href="/about.html">
+                        About
+                    </a>
+                    <a class="item" href="/archive.html">
+                        Archive
+                    </a>
+                    <div class="right menu">
+                        <div id="head-search" class="ui category search item">
+                            <div class="ui transparent icon input">
+                                <input placeholder="Search..." type="text" id="search-input" onkeypress="handleKeyPress()">
+                                <i class="search link icon" onclick="handleSubmit()"></i>
+                            </div>
+                        </div>
+
+			<!--
+                        <a class="item" href="http://stallman.org/facebook.html">
+                            <i class="facebook link icon"></i>
+                        </a>
+			-->
+                        <a class="item" href="https://github.com/phenixcfli">
+                            <i class="github link icon"></i>
+                        </a>
+			<!--
+                        <a class="item" href="/feed.xml">Subscribe</a>
+			-->
+                    </div>
+                </div>
+            </div>
+            <div class="right-nav"></div>
+        </nav>
+    </header>
+</div>
+
+        <main>
+            <div class="post-container">
+    <center>
+        <span class="date">
+            08 Mar 2018 
+             
+        </span>
+        <h1 class="post-title">Hadoop Part 1 - Installation</h1>
+    </center>
+    <div class="ui divider"></div>
+    <p>Big data and machine learning are very hot topic in recent years.
+They are the two face of a coin, when you see the term “machine learning”, the first thing in you mine is most likely “big data”.
+But when you talking about “big data”, what appear in you brain first is most likely the elephant “Hadoop”.</p>
+
+<p><a href="http://hadoop.apache.org/"><img src="/assets/img/2018-03-08-Hadoop-Part-1/220px-Hadoop_logo_new.svg.png" alt="image alt text here" /></a> is an open-source tool for big data analysis,
+initial release on Dec 2011 and the latest release is version 3.0.0.
+Although it is famous, it would be different for individuals to experience it’s power. 
+It is because it requires a farm of computers to release it’s magic which most of you may never have at your home or even your office (especially in HK … :().</p>
+
+<p>In this article, the way to setup this elephant under VM environment will be shared.
+You can have a closer look to “Hadoop” easier, and you can also use it as a test environment to evaluate your own code/job before deploy to a big farm of computer for easier debuging. Enjoy ;).</p>
+
+<h2 id="setup-a-2-node-hadoop-cluster-using-2-virtualbox-vm">Setup a 2-node Hadoop cluster (using 2 VirtualBox VM)</h2>
+<h3 id="step-0-software-download-location">Step 0: Software download location</h3>
+<ul>
+  <li>Download CentOS7 installation disk image (ISO) file from <a href="https://www.centos.org/download/">https://www.centos.org/download/</a> 
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/Download-CentOS7.png" alt="alt text" /></li>
+  <li>Downlaod and install the latest VirtualBox from <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/Download-VirtualBox.png" alt="alt text" /></li>
+  <li>Download Hadoop version 3.0.0 from <a href="http://hadoop.apache.org/releases.html">http://hadoop.apache.org/releases.html</a> 
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/Download-Hadoop.png" alt="alt text" /></li>
+  <li>Download Oracle JDK 8 from <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a>
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/Download-JVM.png" alt="alt text" /></li>
+</ul>
+
+<h3 id="step-1-create-first-vm-centos7-alpha-on-virtualbox">Step 1: Create first VM “centos7-alpha” on VirtualBox</h3>
+<ul>
+  <li>Create VM with settings as below
+    <ul>
+      <li>VM Name: centos7-alpha <br /></li>
+      <li>Memory: 4GB <br /></li>
+      <li>Virtual HDD Type: VDI (VirtualBox Disk Image), Dynamically Allocated (to say disk space) <br /></li>
+      <li>Virtual HDD Size: 40GB (have to be large enough to install software) <br /></li>
+      <li>Network Adapter Type: NAT (temporary used for easier software installation with internet access) <br /></li>
+      <li>Boot Sequence: Optical Drive First</li>
+      <li>OS: CentOS 7</li>
+      <li>Hostname: centos7-alpha (192.168.56.3)</li>
+      <li>Hostname of the other node: centos7-beta (192.168.56.4)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-1.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-2.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-3.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-4.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-5.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-6.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-8.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-11.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-12.png" alt="alt text" /></p>
+
+<blockquote>
+  <p>PS: Details please refer to <a href="https://www.virtualbox.org/wiki/End-user_documentation">VirtualBox doc</a></p>
+</blockquote>
+
+<ul>
+  <li>Mount the DVD image file to Optical Drive, power up VM and install CentOS7</li>
+</ul>
+
+<p><img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-8.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-9.png" alt="alt text" />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/create-vm-10.png" alt="alt text" /></p>
+
+<h3 id="step-2-configure-vm-and-install-required-software">Step 2: Configure VM and install required software</h3>
+
+<ul>
+  <li>Create OS user “hadoop” with home directory located at “/home/hadoop”
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">sudo </span>useradd hadoop
+  <span class="nb">sudo </span>passwd hadoop
+</code></pre></div>      </div>
+      <p>PS: You can also create users during the OS installations.</p>
+    </blockquote>
+  </li>
+  <li><a name="Configure-hostname"></a>Configure the hostname to centos7-alpha
+    <blockquote>
+      <p>Update the file “/etc/hostname”, ie.</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">cat</span> /etc/hostname
+  centos7-alpha.com
+</code></pre></div>      </div>
+      <p>Update the file “/etc/sysconfig/network” to add the line “HOSTNAME=centos7-alpha.com”, ie.</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">cat</span> /etc/sysconfig/network
+  <span class="c"># Created by anaconda</span>
+  <span class="nv">HOSTNAME</span><span class="o">=</span>centos7-alpha.com
+</code></pre></div>      </div>
+      <p>update the file “/etc/hosts” to include IP of both hosts, ie.</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">cat</span> /etc/hosts
+  127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+  ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+  192.168.56.3    centos7-alpha.com centos7-alpha
+  192.168.56.4    centos7-beta.com centos7-beta
+</code></pre></div>      </div>
+      <p>Ref: <a href="https://www.cyberciti.biz/faq/ubuntu-change-hostname-command/">Ubuntu Linux Change Hostname (computer name)</a>, 
+<a href="https://support.rackspace.com/how-to/centos-hostname-change/">Change a server’s hostname in CentOS</a></p>
+    </blockquote>
+  </li>
+  <li>Stop firewall (or open port for inter-communication across Hadoop cluster nodes),
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  systemctl stop firewalld.service
+  chkconfig firewalld off
+</code></pre></div>      </div>
+      <p>PS: This have to be done with root privilege.<br />
+Ref: <a href="https://superuser.com/questions/863456/im-able-to-ssh-into-host-but-not-to-access-it-from-browser-no-route-to-host">Resolve no route to host</a></p>
+    </blockquote>
+  </li>
+  <li>Install Oracle JDK 8
+    <blockquote>
+      <p>Download the JDK rpm package (jdk-Bu161-linux-x64.rpm) from <a href="http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.rpm">download link</a> and stored in home directory of user “hadoop”<br /><br />
+Install JDK 8, by execute below command from terminal window under home directory</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  rpm <span class="nt">-UvH</span> jdk-Bu161-linux-x64.rpm
+</code></pre></div>      </div>
+      <p>PS: This have to be done with root privilege<br /><br />
+Configure JDK 8 as default JVM by adding below lines to file “.bashrc” under user “hadoop”</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/java/jdk1.8.0_161
+  <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/sbin
+</code></pre></div>      </div>
+    </blockquote>
+  </li>
+</ul>
+
+<h3 id="step-3-install-and-configure-hadoop">Step 3: Install and Configure Hadoop</h3>
+<ul>
+  <li>Suggested hadoop settings
+    <ul>
+      <li>Hadoop version: 3.0.0</li>
+      <li>Hadoop home: /home/hadoop (Same as user home)</li>
+      <li>Java version: Java(TM) SE Runtime Environment (build 1.8.0_161-b12)</li>
+      <li>Hadoop data dir: /home/hadoop/hadoop-infra</li>
+      <li>Hadoop Namenode: centos7-alpha
+        <blockquote>
+
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li>Install Hadoop
+    <blockquote>
+      <p>Download the hadoop binary tarball (hadoop-3.0.0.tar.gz) from the <a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0/hadoop-3.0.0.tar.gz">download link</a> and store under home directory of user “hadoop”<br /><br />
+Extract the hadoop binary tarball to home directory by command</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">tar</span> <span class="nt">-vzxf</span> hadoop-3.0.0.tar.gz
+  <span class="nb">mv </span>hadoop-3.0.0/<span class="k">*</span> ./
+  <span class="nb">rmdir </span>hadoop-3.0.0
+</code></pre></div>      </div>
+      <p>The directory structure will be as below <br />
+	<img src="/assets/img/2018-03-08-Hadoop-Part-1/hadoop-directory-structure.png" alt="alt text" /><br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<blockquote>
+  <blockquote>
+    <p>Configure the required environment variables by adding below command to file “.bashrc” under user “hadoop”</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nb">export </span><span class="nv">HADOOP_HOME</span><span class="o">=</span>/home/hadoop 
+	<span class="nb">export </span><span class="nv">HADOOP_MAPRED_HOME</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span> 
+	<span class="nb">export </span><span class="nv">HADOOP_COMMON_HOME</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span> 
+	<span class="nb">export </span><span class="nv">HADOOP_HDFS_HOME</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span> 
+	<span class="nb">export </span><span class="nv">YARN_HOME</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span> 
+	<span class="nb">export </span><span class="nv">HADOOP_COMMON_LIB_NATIVE_DIR</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>/lib/native 
+	<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/sbin:<span class="nv">$HADOOP_HOME</span>/bin 
+	<span class="nb">export </span><span class="nv">HADOOP_INSTALL</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span> 
+	<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/home/hadoop/lib/native  <span class="c"># For Native Library</span>
+</code></pre></div>    </div>
+    <p>Modify “/home/hadoop/etc/hadoop/core-site.xml” as below</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nb">cat</span> /home/hadoop/etc/hadoop/core-site.xml
+</code></pre></div>    </div>
+    <p><img src="/assets/img/2018-03-08-Hadoop-Part-1/core-site-xml.png" alt="alt text" /><br />
+Modify “/home/hadoop/etc/hadoop/hdfs-site.xml” as below</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nb">cat</span> /home/hadoop/etc/hadoop/hdfs-site.xml 
+</code></pre></div>    </div>
+    <p><img src="/assets/img/2018-03-08-Hadoop-Part-1/hdfs-site-xml.png" alt="alt text" /><br />
+Modify “/home/hadoop/etc/hadoop/yarn-site.xml” as below</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nb">cat</span> /home/hadoop/etc/hadoop/yarn-site.xml
+</code></pre></div>    </div>
+    <p><img src="/assets/img/2018-03-08-Hadoop-Part-1/yarn-site-xml.png" alt="alt text" /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	The value of properties <span class="s2">"yarn.application.classpath"</span> have to include all jar files <span class="k">in </span>below paths
+	/home/hadoop/share/hadoop/common,
+	/home/hadoop/share/hadoop/common/lib,
+	/home/hadoop/share/hadoop/hdfs,
+	/home/hadoop/share/hadoop/hdfs/lib,
+	/home/hadoop/share/hadoop/yarn,
+	/home/hadoop/share/hadoop/yarn/lib
+</code></pre></div>    </div>
+    <p>Modify “/home/hadoop/etc/hadoop/mapred-site.xml” as below</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nb">cat</span> /home/hadoop/etc/hadoop/mapred-site.xml
+</code></pre></div>    </div>
+    <p><img src="/assets/img/2018-03-08-Hadoop-Part-1/mapred-site-xml.png" alt="alt text" /><br /></p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	The value of properties <span class="s2">"mapreduce.application.classpath"</span> have to include all jar files <span class="k">in </span>below paths
+	/home/hadoop/share/hadoop/common,
+	/home/hadoop/share/hadoop/common/lib,
+	/home/hadoop/share/hadoop/hdfs,
+	/home/hadoop/share/hadoop/hdfs/lib,
+	/home/hadoop/share/hadoop/mapreduce
+</code></pre></div>    </div>
+    <p>Modify “/etc/hadoop/etc/hadoop/workers” to include hostname of all nodes as below</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nb">cat</span> /home/hadoop/etc/hadoop/workers
+</code></pre></div>    </div>
+    <p><img src="/assets/img/2018-03-08-Hadoop-Part-1/workers.png" alt="alt text" /><br />
+Up to now, the installation of VM “centos7-alpha” is completed.</p>
+  </blockquote>
+</blockquote>
+
+<h3 id="step-4-create-another-node-centos7-beta">Step 4: Create another node “centos7-beta”</h3>
+<ul>
+  <li>Clone VM “centos7-alpha” to VM “centos7-beta”
+    <blockquote>
+      <p>Power off VM “centos7-alpha”<br />
+Clone VM “centos7-alpha” to another VM “centos7-beta” in virtual box manager
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/clone-vm-4.png" alt="alt text" /></p>
+    </blockquote>
+  </li>
+  <li>Change the virtual network adaptor of both VM to Host-only Adaptor
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/clone-vm-12.png" alt="alt text" /><br />
+    <blockquote>
+      <p>Ref: <a href="https://blogs.oracle.com/scoter/networking-in-virtualbox-v2">Oracle VM VirtualBox: Networking options and how-to manage them</a></p>
+    </blockquote>
+  </li>
+  <li>Update the host settings
+    <blockquote>
+      <p>Power up VM “centos7-beta”<br />
+Configure the hostname from “centos7-alpha” to “centos7-beta” follow <a href="#Configure-hostname">step above</a><br />
+Restart VM “centos7-beta” to make the changes effective</p>
+    </blockquote>
+  </li>
+  <li>Configure SSH to ensure each cluster node can login itself and all other node without password
+    <blockquote>
+      <p>Start both VM <br />
+Ssh-key config to ensure localhost can be reached without password</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ssh-keygen
+  <span class="nb">cp</span> /home/hadoop.ssh/id_rsa.pub .ssh/authorized_keys
+</code></pre></div>      </div>
+      <p>Test to login localhost</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ssh localhost
+</code></pre></div>      </div>
+      <p>Ssh-key config to ensure other node can be reach without password</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ssh-copy-id &lt;hostname-of-target-node&gt;
+</code></pre></div>      </div>
+      <p>Test to login other node</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ssh &lt;hostname-of-target-node&gt;
+</code></pre></div>      </div>
+      <p>Ref: <a href="https://www.linuxtrainingacademy.com/ssh-login-without-password/">ssh login without password</a></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h3 id="step-5-startup-hadoop">Step 5: Startup Hadoop</h3>
+<ul>
+  <li>Format HDFS
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  hdfs namenode <span class="nt">-format</span>
+</code></pre></div>      </div>
+      <p>PS: This is done only on first namenode startup</p>
+    </blockquote>
+  </li>
+  <li>Start DFS
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  start-dfs.sh
+  Starting namenodes on <span class="o">[</span>centos7-alpha]
+  Starting datanodes
+  Starting secondary namenodes <span class="o">[</span>centos7-alpha.com]
+</code></pre></div>      </div>
+      <p>After the scripted completed, verify the process as below</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>hadoop@centos7-alpha ~]<span class="nv">$ </span>jps
+  6304 SecondaryNameNode
+  6084 DataNode
+  5948 NameNode
+  6510 Jps
+</code></pre></div>      </div>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>hadoop@centos7-beta ~]<span class="nv">$ </span>jps
+  2678 DataNode
+  2861 Jps
+</code></pre></div>      </div>
+    </blockquote>
+  </li>
+  <li>Start Yarn
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  start-yarn.sh
+  Starting resourcemanager
+  Starting nodemanagers
+</code></pre></div>      </div>
+      <p>After the scripted completed, verify the process as below</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>hadoop@centos7-alpha ~]<span class="nv">$ </span>jps
+  6304 SecondaryNameNode
+  6084 DataNode
+  5948 NameNode
+  6716 ResourceManager
+  6846 NodeManager
+  7246 Jps
+</code></pre></div>      </div>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>hadoop@centos7-beta ~]<span class="nv">$ </span>jps
+  2977 NodeManager
+  2678 DataNode
+  2861 Jps
+</code></pre></div>      </div>
+    </blockquote>
+  </li>
+  <li>Start job history server
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mapred <span class="nt">--daemon</span> start historyserver
+</code></pre></div>      </div>
+      <p>After the scripted completed, verify the process as below</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>hadoop@centos7-alpha ~]<span class="nv">$ </span>jps
+  6304 SecondaryNameNode
+  6084 DataNode
+  5948 NameNode
+  6716 ResourceManager
+  6846 NodeManager
+  7373 JobHistoryServer
+  7246 Jps
+</code></pre></div>      </div>
+    </blockquote>
+  </li>
+</ul>
+
+<blockquote>
+  <p>PS: Above startup scripts only need to runs on one node only, hadoop processes will be started in all nodes in the cluster</p>
+</blockquote>
+
+<h3 id="step-6-hadoop-consoles-for-cluster-information">Step 6: Hadoop consoles for cluster information</h3>
+<ul>
+  <li>Cluster information
+    <blockquote>
+      <p>Console URL: http://centos7-alpha:9870<br />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/console-all-applications.png" alt="alt text" /><br /></p>
+    </blockquote>
+  </li>
+  <li>Node information
+    <blockquote>
+      <p>Console URL: http://centos7-alpha:8088<br />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/console-node-info.png" alt="alt text" /><br /></p>
+    </blockquote>
+  </li>
+  <li>Job history
+    <blockquote>
+      <p>Console URL: http://centos7-alpha:19888<br />
+<img src="/assets/img/2018-03-08-Hadoop-Part-1/console-job-history.png" alt="alt text" /><br /></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h3 id="step-7-stop-hadoop">Step 7: Stop Hadoop</h3>
+<ul>
+  <li>Stop job history server
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mapred <span class="nt">--daemon</span> stop historyserver
+</code></pre></div>      </div>
+    </blockquote>
+  </li>
+  <li>Stop Yarn
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  stop-yarn.sh
+</code></pre></div>      </div>
+    </blockquote>
+  </li>
+  <li>Stop DFS
+    <blockquote>
+      <p>Execute below command from terminal window</p>
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  stop-dfs.sh
+</code></pre></div>      </div>
+    </blockquote>
+  </li>
+  <li>Verify the hadoop processes stopped
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>hadoop@centos7-alpha ~]<span class="nv">$ </span>jps
+  7246 Jps
+</code></pre></div>    </div>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">[</span>hadoop@centos7-beta ~]<span class="nv">$ </span>jps
+  2861 Jps
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>Ref: <a href="Ref: https://www.tutorialspoint.com/hadoop/hadoop_enviornment_setup.htm">Tutorial Point</a>, <a href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/ClusterSetup.html">Hadoop cluster setup (official)</a></p>
+
+    <div class="ui horizontal divider">
+        Thank You For Reading
+    </div>
+    <!-- author box -->
+<div class="ui segment">
+    <div class="ui items">
+        <div class="item">
+            <a class="ui circular tiny image">
+                <img src="/assets/img/profile.jpg">
+            </a>
+            <div class="content">
+                <a class="header">Phenix Li</a>
+                <div class="description">
+                    <p>A software engineer. <br>
+			Love computer and programming at first sight. <br>
+			Current interested topics are machine-learning, mobile applications and IoT</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <section class="disqus">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+
+        var disqus_shortname = 'phenixcfli-github-io'; 
+        var disqus_developer = 0; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+</div>
+        </main>
+    </div>
+    
+    <footer>
+    <div class="footer-wrapper">
+        <div class="ui secondary menu inverted">
+            <p class="item">Phenix@2018</p>
+            <div class="right menu">
+                <a class="item" href="/archive.html">
+                    Latest Posts
+                </a>
+		<!--
+                <a class="item" href="https://twitter.com/fsf">
+                    Twitter
+                </a>
+		-->
+                <a class="item" href="https://github.com/phenixcfli">
+                    Github
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+<script type="text/javascript" src="/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/vendor/semantic.min.js"></script>
+
+
+    <script src="/assets/js/vendor/jquery.min.js"></script>
+    <script src="/assets/js/vendor/semantic.min.js"></script>
+    <script type="/assets/js/main.js"></script>
+</body>
+
+</html>
